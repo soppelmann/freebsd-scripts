@@ -11,9 +11,9 @@ new_be="$subdirectory" #use the subdirectory name for the be
 
 # Sync sources
 cd /usr
-rsync -avz df:/usr/src .
+rsync --exclude .git/ --exclude src/.git/ -avz df:/usr/src .
 cd /usr/obj/usr
-rsync -avz df:/usr/obj .
+rsync -avz df:/usr/obj/usr/src ./src/
 
 cd /usr/src
 # Create the new boot environment
@@ -24,6 +24,8 @@ sudo bectl mount "$new_be" "$mount_point"
 
 # Install kernel and world, deleting old files
 sudo make DESTDIR="$mount_point" BATCH_DELETE_OLD_FILES=yes installkernel delete-old
+
+#sudo make DESTDIR="$mount_point" BATCH_DELETE_OLD_FILES=yes installkernel installworld delete-old
 
 # Update configs in the new boot environment
 #etcupdate -D "$mount_point"
