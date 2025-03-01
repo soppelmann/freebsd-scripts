@@ -12,6 +12,7 @@ new_be="$subdirectory" #use the subdirectory name for the be
 # Sync sources
 cd /usr
 rsync -avz df:/usr/src .
+cd /usr/obj/usr
 rsync -avz df:/usr/obj .
 
 cd /usr/src
